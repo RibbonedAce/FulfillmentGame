@@ -13,18 +13,12 @@ public class FulfillmentSolver : MonoBehaviour {
             Instance = this;
         } else {
             Debug.LogWarning("Found extra FulfillmentSolver on" + gameObject.name);
-            Destroy(this);
+            enabled = false;
         }
 
         fcs = new List<FulfillmentCenter>();
-    }
-
-    public void AddFC(FulfillmentCenter fc) {
-        fcs.Add(fc);
-    }
-
-    public void RemoveFC(FulfillmentCenter fc) {
-        fcs.Remove(fc);
+        FulfillmentCenter.OnAddFC += (fc) => fcs.Add(fc);
+        FulfillmentCenter.OnRemoveFC += (fc) => fcs.Remove(fc);
     }
 
     public void PlaceOrder(DemandDestination destination) {

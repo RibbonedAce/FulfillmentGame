@@ -10,9 +10,17 @@ public class FulfillmentCenter : MonoBehaviour {
     [SerializeField]
     private List<Vehicle> vehicles;
 
+    private bool counted;
+
+    public delegate void AddFCAction(FulfillmentCenter fc);
+    public static event AddFCAction OnAddFC;
+
+    public delegate void RemoveFCAction(FulfillmentCenter fc);
+    public static event RemoveFCAction OnRemoveFC;
+
     // Awake is called before the script is enabled, and before Start
     private void Awake() {
-        
+        counted = false;
     }
 
     // Start is called before the first Update
@@ -27,12 +35,13 @@ public class FulfillmentCenter : MonoBehaviour {
         
     }
 
-    private void OnEnable() {
-        FulfillmentSolver.Instance.AddFC(this);
-    }
-
-    private void OnDisable() {
-        FulfillmentSolver.Instance.RemoveFC(this);
+    private void OnMouseDown() {
+        counted = !counted;
+        if (counted) {
+            OnAddFC(this);
+        } else {
+            OnRemoveFC(this);
+        }
     }
 
     public bool ContainsSupply(Product product) {

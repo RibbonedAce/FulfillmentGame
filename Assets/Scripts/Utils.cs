@@ -29,7 +29,7 @@ public static class Utils {
     /// <param name="obj">The object to try to pop from the list</param>
     /// <returns>The object requested if present, default if not present</returns>
     public static T Pop<T>(this List<T> list, T obj) {
-        T result = default(T);
+        T result = default;
 
         int index = list.IndexOf(obj);
         if (index != -1) {
