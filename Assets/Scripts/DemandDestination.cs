@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DemandDestination : MonoBehaviour {
+public class DemandDestination : PanelCreator {
     [SerializeField]
     private float orderInterval;
 
@@ -33,6 +33,13 @@ public class DemandDestination : MonoBehaviour {
         if (timeSinceOrder > orderInterval) {
             PlaceOrder();
         }
+    }
+
+    public override UIPanel CreatePanel() {
+        UIPanel result = new UIPanel(name);
+        result.AddAttribute("Ordered", requestedProduct == null ? "None" : requestedProduct.Name);
+
+        return result;
     }
 
     public void Pickup(Product product) {

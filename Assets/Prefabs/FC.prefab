@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c91681015f88c4fa27a45440fc5f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  supply:
+  initialSupply:
   - id: 0
     name: Book
     baseValue: 0

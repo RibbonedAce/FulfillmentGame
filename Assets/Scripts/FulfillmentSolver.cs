@@ -12,7 +12,7 @@ public class FulfillmentSolver : MonoBehaviour {
         if (Instance == null) {
             Instance = this;
         } else {
-            Debug.LogWarning("Found extra FulfillmentSolver on" + gameObject.name);
+            Debug.LogWarning("Found extra FulfillmentSolver on" + name);
             enabled = false;
         }
 
@@ -29,6 +29,6 @@ public class FulfillmentSolver : MonoBehaviour {
             }
         }
 
-        Debug.LogWarning("Could not fulfill order for Product ID " + destination.RequestedProduct.ID + " to " + destination.gameObject.name);
+        Debug.LogWarning("Could not fulfill order for Product ID " + destination.RequestedProduct.ID + " to " + destination.name);
     }
 }

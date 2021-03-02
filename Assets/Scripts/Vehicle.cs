@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vehicle : MonoBehaviour {
-    [SerializeField]
-    private List<Product> load;
-
+public class Vehicle : PanelCreator {
     [SerializeField]
     private float speed;
 
-    [SerializeField]
+    private StorageDict<Product> load;
+    private Transform target;
+
     private FulfillmentCenter source;
-    public FulfillmentCenter Source { 
+    public FulfillmentCenter Source {
         get => source;
         set {
             source = value;
@@ -30,7 +29,7 @@ public class Vehicle : MonoBehaviour {
 
     // Awake is called before the script is enabled, and before Start
     private void Awake() {
-
+        load = new StorageDict<Product>();
     }
 
     // Start is called before the first Update
@@ -50,17 +49,25 @@ public class Vehicle : MonoBehaviour {
             Dropoff(destination.RequestedProduct);
         }
     }
+    public override UIPanel CreatePanel() {
+        UIPanel result = new UIPanel("Truck");
+        result.AddAttribute("Heading to", target.name);
+        result.AddAttribute("Carrying", load.Count.ToString());
+
+        return result;
+    }
 
     public void AddProduct(Product product) {
-        load.Add(product);
+        load.AddItem(product);
     }
 
     public void Dropoff(Product product) {
-        destination.Pickup(load.Pop(product));
+        destination.Pickup(load.PopItem(product));
         destination = null;
     }
 
     private void GoTowardsTarget(Transform target) {
+        this.target = target;
         transform.LookAt2D(target, true);
 
         float distance = Vector3.Distance(transform.position, target.position);
